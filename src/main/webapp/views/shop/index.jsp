@@ -15,8 +15,6 @@
 <jsp:include page="../admin-header.jsp"></jsp:include>
 <body>
 <jsp:include page="../home_top_navigate.jsp"></jsp:include>
-<h1>Cart</h1>
-<a href="${pageContext.request.contextPath}/home/index?page=0&keyword=">Continue Order</a>
 <c:if test="${myCart.size() > 0}">
     <div class="content mt-3">
         <div class="animated fadeIn">
@@ -25,6 +23,7 @@
                     <div class="card">
                         <div class="card-header">
                             <strong class="card-title">Cart</strong>
+                            <a style="display: inline-block; float: right;" href="${pageContext.request.contextPath}/home/index?page=0&keyword=">Continue Order</a>
                         </div>
                         <div class="card-body">
                             <table id="bootstrap-data-table" class="table table-striped table-bordered">

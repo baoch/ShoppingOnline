@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -85,7 +86,7 @@ public class UserController {
         role.setUser(tmpUser);
         role.setROLE("ROLE_USER");
         roleRepository.save(role);
-        return new ModelAndView("/home/index");
+        return new ModelAndView("/auth/login");
     }
 
 
@@ -97,13 +98,19 @@ public class UserController {
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public ModelAndView goToEdit(@RequestParam(value = "id", required = false) String id) {
-        User user = userRepository.findOne(id);
+    public ModelAndView goToEdit(Principal principal) {
+        if (principal == null) {
+            return new ModelAndView("/403page");
+        }
+        String username = principal.getName();
+        User user = userRepository.findOne(username);
         ModelAndView model = new ModelAndView("/user/edit", "user", user);
+        List<Role> listRole = roleRepository.findAll();
+        System.out.println(listRole);
         return model;
     }
 
-    @RequestMapping(value = "edit", method = RequestMethod.POST)
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public String editUser(
             @Valid @ModelAttribute("user")User user,
             BindingResult bindingResult) {
@@ -111,7 +118,7 @@ public class UserController {
             return "error";
         }
         userRepository.save(user);
-        return "redirect:index";
+        return "/home/index";
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)

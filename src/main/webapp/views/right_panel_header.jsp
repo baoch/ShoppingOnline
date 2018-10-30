@@ -100,7 +100,7 @@
                 <div class="user-menu dropdown-menu">
                     <sec:authorize access="isAuthenticated()">
                         <sec:authentication var="principal" property="principal" />
-                        <a class="nav-link" href="${pageContext.request.contextPath}/user/edit?id=${principal.username}">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/user/edit">
                             <i class="fa fa-user"></i>
                             Hello: ${principal.username}
                         </a>

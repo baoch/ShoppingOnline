@@ -142,7 +142,8 @@ public class ShoppingController {
                 orderDetailRepository.save(orderDetail);
             }
         }
-        session.setAttribute("cart", new Cart());
+        List<Cart> newCart = new ArrayList<Cart>();
+        session.setAttribute("cart", null);
         return new ModelAndView("/home/index");
     }
 

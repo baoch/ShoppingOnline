@@ -63,7 +63,7 @@
                 <c:if test="${listProduct.size() > 0}">
                     <c:forEach var="row" items="${listProduct}">
                         <div class="col-sm-4 col-lg-4 col-md-4">
-                            <div class="thumbnail" style="height: 300px;">
+                            <div class="thumbnail" style="height: 300px; position: relative;">
                                 <c:choose>
                                     <c:when test="${row.thumbnailUrl != null && !row.thumbnailUrl.trim().equals('')}">
                                         <img src="${pageContext.request.contextPath}/img/${row.thumbnailUrl}" alt="">
@@ -79,7 +79,7 @@
                                         <a href="${pageContext.request.contextPath}/home/detail?id=${row.id}">${row.name}</a>
                                     </h4>
                                     <p>${row.description}</p>
-                                    <a href="${pageContext.request.contextPath}/shop/order?id=${row.id}&quantity=1">Buying</a>
+                                    <a class="btn btn-primary" style="position: absolute; bottom: 10px; right: 10px;" href="${pageContext.request.contextPath}/shop/order?id=${row.id}&quantity=1">Buying</a>
                                 </div>
                             </div>
                         </div>
@@ -92,7 +92,7 @@
     </div>
 
 </div>
-<div style="display: block; width: 950px; float: right; text-align: center">
+<div style="display: block; width: 950px; margin: 0 auto; padding-left: 300px; text-align: center">
         <c:if test="${page > 0}">
             <a href="${pageContext.request.contextPath}/home/index?page=${page-1}&keyword=${keyword}">
                 Previous

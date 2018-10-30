@@ -11,7 +11,7 @@
     <p class="lead">Shop Name</p>
     <div class="list-group">
         <c:forEach items="${listCategory}" var="item">
-            <a href="TODO-GET PRODUCT BY CATEGORY ID" class="list-group-item">${item.name}</a>
+            <a href="${pageContext.request.contextPath}/product/get-product-by-category?id=${item.id}" class="list-group-item">${item.name}</a>
         </c:forEach>
     </div>
 </div>

@@ -34,7 +34,7 @@
                 <li>
                     <sec:authorize access="isAuthenticated()">
                         <sec:authentication var="principal" property="principal" />
-                        <a href="#">
+                        <a href="${pageContext.request.contextPath}/user/edit">
                             <span class="glyphicon glyphicon-user"></span>
                             Hello: ${principal.username}
                         </a>
