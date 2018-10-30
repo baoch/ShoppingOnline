@@ -31,6 +31,8 @@
                     <a href="${pageContext.request.contextPath}/category/index?page=0" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-bars"></i>Category</a>
                     <a href="${pageContext.request.contextPath}/product/index?page=0" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-product-hunt"></i>Product</a>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-file"></i>Order</a>
+                    <a href="${pageContext.request.contextPath}/report/" class="dropdown-toggle" aria-haspopup="true"
+                       aria-expanded="false"> <i class="menu-icon fa fa-product-hunt"></i>Report</a>
                 </li>
                 <%--<li class="menu-item-has-children dropdown">--%>
                     <%--<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Components</a>--%>

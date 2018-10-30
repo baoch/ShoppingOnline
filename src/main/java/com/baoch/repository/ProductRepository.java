@@ -23,4 +23,29 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Query(value = "select p from Product p where p.category.id=:id")
     List<Product> findByCategoryId(@Param("id")int id);
+
+
+    @Query(value = "Select  c.id, c.name, coalesce(sum(p.amount),0) as totalAmount " +
+            "from categories c " +
+            "left outer join products p " +
+            "on p.category_id=c.id " +
+            "group by c.id " +
+            "order by totalAmount desc", nativeQuery = true)
+    List<Object[]> findProductAmountPerCategory();
+
+    @Query(value = "Select  c.id, c.name, coalesce(count(p.id),0) as totalAmount " +
+            "from categories c " +
+            "left outer join products p " +
+            "on p.category_id=c.id " +
+            "group by c.id " +
+            "order by totalAmount desc", nativeQuery = true)
+    List<Object[]> findProductPerCategory();
+
+
+    @Query(value = "Select c.id, c.name, coalesce(max(p.price), 0) as maxPrice, coalesce(min(p.price), 0) as minPrice, coalesce(avg(p.price), 0) as avgPrice " +
+            "from categories c " +
+            "left outer join products p " +
+            "on p.category_id = c.id " +
+            "group by c.id", nativeQuery = true)
+    List<Object[]> findProductMaxMinAvgByCategory();
 }
