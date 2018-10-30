@@ -193,4 +193,17 @@ public class ProductController {
         productRepository.delete(id);
         return "redirect:index";
     }
+
+
+    @RequestMapping(value = "/get-product-by-category", method = RequestMethod.GET)
+    public ModelAndView listProduct(@RequestParam(value = "id", required = false) int id) {
+        if (id == 0){
+            return new ModelAndView("/error");
+        }
+        List<Product> listProduct = productRepository.findByCategoryId(id);
+        ModelAndView model = new ModelAndView("/product/listByCategory", "listProduct", listProduct);
+        Category category = categoryRepository.findOne(id);
+        model.addObject("category", category);
+        return model;
+    }
 }

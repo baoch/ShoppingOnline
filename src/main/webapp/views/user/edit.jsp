@@ -8,16 +8,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <!DOCTYPE html>
 <html>
 <jsp:include page="../admin-header.jsp"></jsp:include>
 <body>
-<jsp:include page="../left_panel.jsp"/>
+<sec:authorize access="hasRole('ROLE_ADMIN')">
+    <jsp:include page="../left_panel.jsp"/>
+</sec:authorize>
 <div id="right-panel" class="right-panel">
 
     <!-- Header-->
     <!-- /header -->
-    <jsp:include page="../right_panel_header.jsp"/>
+    <sec:authorize access="hasRole('ROLE_ADMIN')">
+        <jsp:include page="../right_panel_header.jsp"/>
+    </sec:authorize>
     <!-- Header-->
     <form:form method="post" action="${pageContext.request.contextPath}/user/edit" modelAttribute="user">
         <div class="content mt-3">
@@ -28,14 +34,14 @@
                     <div class="col-xs-6 col-sm-6">
                         <div class="card">
                             <div class="card-header">
-                                <strong>Register</strong>
+                                <strong>Edit info</strong>
                             </div>
                             <div class="card-body card-block">
                                 <div class="form-group">
                                     <form:label class=" form-control-label" path="username">Username:</form:label>
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fa fa-font"></i></div>
-                                        <form:hidden class="form-control" path="username" />
+                                        <form:input class="form-control" path="username" readonly="true" />
                                     </div>
                                     <small class="form-text text-muted"><form:errors path="username" cssStyle="color:red;display: block"/></small>
                                 </div>
@@ -65,7 +71,7 @@
                                     <%--</div>--%>
                                 <%--</div>--%>
                             </div>
-                            <input type="submit" class="btn btn-success" value="Register"/>
+                            <input type="submit" class="btn btn-success" value="Edit"/>
                         </div>
                     </div>
                 </div>

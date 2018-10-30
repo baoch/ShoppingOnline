@@ -15,8 +15,6 @@
 <jsp:include page="../admin-header.jsp"></jsp:include>
 <body>
 <jsp:include page="../home_top_navigate.jsp"></jsp:include>
-<h1>Cart</h1>
-<a href="${pageContext.request.contextPath}/home/index?page=0&keyword=">Continue Order</a>
 <c:if test="${myCart.size() > 0}">
     <div class="content mt-3">
         <div class="animated fadeIn">
@@ -25,6 +23,7 @@
                     <div class="card">
                         <div class="card-header">
                             <strong class="card-title">Cart</strong>
+                            <a style="display: inline-block; float: right;" href="${pageContext.request.contextPath}/home/index?page=0&keyword=">Continue Order</a>
                         </div>
                         <div class="card-body">
                             <table id="bootstrap-data-table" class="table table-striped table-bordered">
@@ -44,12 +43,14 @@
                                             <td>${row.quantity}</td>
                                             <td>${row.product.price * row.quantity}</td>
                                             <td>
-                                                <a class="btn btn-success" style="margin-left: 40px ; width: 80px;"
-                                                   href="${pageContext.request.contextPath}/shop/order?id=${row.product.id}&quantity=1">Add</a>
-                                                <a class="btn btn-warning" style="margin-left: 40px ; width: 80px;"
-                                                   href="${pageContext.request.contextPath}/shop/order?id=${row.product.id}&quantity=-1">Minus</a>
-                                                <a class="btn-danger" style="margin-left: 40px ; width: 80px;"
+                                                <a class="btn btn-danger" style="margin-left: 40px ; width: 80px; float: right;"
                                                    href="${pageContext.request.contextPath}/shop/remove?id=${row.product.id}">Delete</a>
+                                                <a class="btn btn-warning" style="margin-left: 40px ; width: 80px; float: right;"
+                                                   href="${pageContext.request.contextPath}/shop/order?id=${row.product.id}&quantity=-1">Minus</a>
+                                                <a class="btn btn-success" style="margin-left: 40px ; width: 80px; float: right;"
+                                                   href="${pageContext.request.contextPath}/shop/order?id=${row.product.id}&quantity=1">Add</a>
+
+
                                             </td>
                                         </tr>
                                     </c:if>
@@ -57,9 +58,8 @@
                                 <tr>
                                     <td colspan="3">Total: ${total}</td>
                                     <%--<sec:authorize access="isAuthenticated()">--%>
-                                        <sec:authentication var="principal" property="principal"/>
-                                        <td><a class="btn btn-primary" style="width: 80px; text-align: center"
-                                               href="${pageContext.request.contextPath}/shop/payment?user=${principal}&price=${total}">Payment</a>
+                                        <td><a class="btn btn-primary" style="width: 80px; text-align: center; float: right;"
+                                               href="${pageContext.request.contextPath}/shop/payment?price=${total}">Payment</a>
                                         </td>
                                     <%--</sec:authorize>--%>
 
