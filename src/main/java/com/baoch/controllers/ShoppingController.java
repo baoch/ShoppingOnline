@@ -44,14 +44,14 @@ public class ShoppingController {
 
     private int isExistItem(int id, List<Cart> myCart) {
         for (int i = 0; i < myCart.size(); i++) {
-            if (myCart.get(i).getProduct().getId() == id){
+            if (myCart.get(i).getProduct().getId() == id) {
                 return i;
             }
         }
         return -1;
     }
 
-    private double calTotal(List<Cart> myCart){
+    private double calTotal(List<Cart> myCart) {
         double result = 0.0;
         if (myCart != null) {
             for (Cart item : myCart) {
@@ -62,7 +62,7 @@ public class ShoppingController {
     }
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public ModelAndView index(HttpSession session){
+    public ModelAndView index(HttpSession session) {
         List<Cart> myCart = (List<Cart>) session.getAttribute("cart");
         double total = calTotal(myCart);
         ModelAndView model = new ModelAndView("/shop/index", "myCart", myCart);
@@ -87,7 +87,7 @@ public class ShoppingController {
             myCart.add(cart);
         } else {
             int index = isExistItem(id, myCart);
-            if (index == -1){
+            if (index == -1) {
                 Cart cart = new Cart();
                 cart.setProduct(product);
                 cart.setQuantity(quantity);
@@ -105,7 +105,7 @@ public class ShoppingController {
     @RequestMapping(value = "/remove", method = RequestMethod.GET)
     public String delete(@RequestParam(value = "id", required = false) int id, HttpSession session) {
         List<Cart> myCart = (List<Cart>) session.getAttribute("cart");
-        if(myCart != null) {
+        if (myCart != null) {
             int index = isExistItem(id, myCart);
             if (index != -1) {
                 myCart.remove(index);
@@ -116,23 +116,24 @@ public class ShoppingController {
     }
 
     @RequestMapping(value = "/payment", method = RequestMethod.GET)
-    public ModelAndView payment(@RequestParam(value = "user", required = false) Principal principal, @RequestParam(value = "price", required = false) float price, HttpSession session) {
+    public ModelAndView payment(Principal principal, @RequestParam(value = "price", required = false) float price, HttpSession session) {
+        if (principal == null) {
+            return new ModelAndView("/403page");
+        }
         List<Cart> myCart = (List<Cart>) session.getAttribute("cart");
         Order order = new Order();
-        if (principal != null && (price != 0)) {
-            String username = principal.getName();
-            User user = userRepository.findOne(username);
-            if (user != null) {
-                order.setUser(user);
-                Date date = new Date();
-                String name = "order-" + date;
-                order.setName(name);
-                order.setPrice(price);
-            }
+        String username = principal.getName();
+        User user = userRepository.findOne(username);
+        if (user != null) {
+            order.setUser(user);
+            Date date = new Date();
+            String name = "order-" + date;
+            order.setName(name);
+            order.setPrice(price);
         }
         Order tmpOrder = orderRepository.save(order);
         if (myCart != null && myCart.size() > 0) {
-            for (Cart cart: myCart) {
+            for (Cart cart : myCart) {
                 Product product = productRepository.findOne(cart.getProduct().getId());
                 OrderDetail orderDetail = new OrderDetail();
                 orderDetail.setOrder(tmpOrder);
@@ -141,7 +142,7 @@ public class ShoppingController {
                 orderDetailRepository.save(orderDetail);
             }
         }
-        session.setAttribute("cart", null);
+        session.setAttribute("cart", new Cart());
         return new ModelAndView("/home/index");
     }
 
